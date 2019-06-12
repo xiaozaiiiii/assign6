@@ -56,8 +56,15 @@ class Robot extends Enemy{
       if(laserTimer == LASER_COOLDOWN){
       
         //laser.checkCollision();
+        if(x < player.x){
         laser.fire(x + HAND_OFFSET_X_FORWARD, y + HAND_OFFSET_Y, player.x, player.y);
         laserTimer = 0;
+        }
+        if(x > player.x){
+        laser.fire(x + HAND_OFFSET_X_BACKWARD, y + HAND_OFFSET_Y, player.x, player.y);
+        laserTimer = 0;
+        }
+        
       }
       if(laserTimer < LASER_COOLDOWN){
         //laser.checkCollision();
