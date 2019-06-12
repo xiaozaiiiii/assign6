@@ -4,7 +4,7 @@ class Dinosaur extends Enemy{
     super(x,y);
   }
   
-	float currentSpeed = 0.5f;
+	float currentSpeed = 1f;
   float TRIGGERED_SPEED_MULTIPLIER = 5;
 
 	// HINT: Player Detection in update()
