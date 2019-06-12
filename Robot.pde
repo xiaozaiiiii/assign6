@@ -3,6 +3,7 @@ class Robot extends Enemy{
   Laser laser;
   Robot(float x, float y){
     super(x,y);
+    laser = new Laser();
   }
 	final int PLAYER_DETECT_RANGE_ROW = 2;
 	final int LASER_COOLDOWN = 180;
@@ -10,7 +11,9 @@ class Robot extends Enemy{
 	final int HAND_OFFSET_X_FORWARD = 64;
 	final int HAND_OFFSET_X_BACKWARD = 16;
   float speed = 2f;
-
+  int laserTimer = 180;
+  
+  
   void display(){
     pushMatrix();
     translate(x,y);
@@ -23,14 +26,13 @@ class Robot extends Enemy{
     }
     popMatrix();
     
-    if(laser != null){
-      laser.display();
-    }else{
-      super.display();
-    }
+    laser.display();
   }
 	// HINT: Player Detection in update()
   void update(){
+    
+    laser.update();
+    laser.checkCollision(player);
     
     boolean checkX = false;
     boolean checkY = false;
@@ -50,14 +52,16 @@ class Robot extends Enemy{
     
 	
   	if(checkX && checkY){
-      laser = new Laser();
-      if(x < player.x){
+      
+      if(laserTimer == LASER_COOLDOWN){
+      
         //laser.checkCollision();
         laser.fire(x + HAND_OFFSET_X_FORWARD, y + HAND_OFFSET_Y, player.x, player.y);
+        laserTimer = 0;
       }
-      if(x > player.x){
+      if(laserTimer < LASER_COOLDOWN){
         //laser.checkCollision();
-        laser.fire(x + HAND_OFFSET_X_BACKWARD, y + HAND_OFFSET_Y, player.x, player.y);
+        laserTimer ++;
       }
       return;
      
